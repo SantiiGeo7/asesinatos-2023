@@ -1,0 +1,85 @@
+---
+title: "Homicidios en Costa Rica 2023"
+author: "Santiago Rodríguez"
+lang: es
+format:
+  html: 
+    toc: true
+    theme: lux
+---
+
+# Presentacion 
+Este documento contiene un conjunto de graficos sobre homicidios cometidos en CR en 2023
+
+# Lectura de datos
+
+```{r}
+#| label: lectura-datos
+#| code-fold: true
+
+delitos_2023 <- read.csv(file = "estadisticaspoliciales2023.csv")
+```
+
+# Filtrado de homicidios 
+
+```{r}
+#| label: filtrado-homicidios
+#| code-fold: true
+homicidios2023 <- 
+  delitos_2023[delitos_2023$Delito == "HOMICIDIO",]
+```
+
+# Homicidios por provincia
+
+```{r}
+#| label: homicidios_x_provincia
+#| code-fold: true
+#Conteo de homicidio por provincia
+homicidios_x_provincia <- table(homicidios2023$Provincia)
+
+#Ordenamiento por cantidad de homicidios
+homicidios_x_provincia <- sort(homicidios_x_provincia, decreasing = TRUE)
+
+barplot(height = homicidios_x_provincia,
+        las = 2,
+        col = "black",
+        cex.names = 0.7,
+        main = "Homicidios por provincia")
+```
+
+# Grafico de homicidios por cantón
+```{r}
+#| label: homicidios_x_canton
+#| code-fold: true
+#Conteo de homicidio por provincia
+homicidios_x_canton <- table(homicidios2023$Canton)
+
+#Ordenamiento por cantidad de homicidios
+homicidios_x_canton <- sort(homicidios_x_canton, decreasing = TRUE)
+homicidios_x_canton <- head(homicidios_x_canton, 20)
+
+barplot(height = homicidios_x_canton,
+        las = 2,
+        col = "black",
+        cex.names = 0.7,
+        main = "Homicidios por canton")
+```
+
+# Grafico de homicidios por genero
+
+```{r}
+#| label: homicidios_x_genero
+#| code-fold: true
+#Conteo de homicidio por provincia
+homicidios_x_genero <- table(homicidios2023$Genero)
+
+#Ordenamiento por cantidad de homicidios
+homicidios_x_genero <- sort(homicidios_x_genero, decreasing = TRUE)
+
+barplot(height = homicidios_x_genero,
+        las = 2,
+        col = "black",
+        cex.names = 0.7,
+        main = "Homicidios por genero")
+```
+
